@@ -11,7 +11,7 @@ import shapes.Ball;
  * @author koz01
  *
  */
-/*
+
 public class Catapult implements Paintable{
 
 	private static final int ARR_SIZE = 5;
@@ -42,7 +42,7 @@ public class Catapult implements Paintable{
 		this.power = power;
 	}
 
-	public void shootBall(Ball ball, SimulationManager manager) {
+	public void shootBall(Ball ball, Simulation manager) {
 		int xEnd = x + (int) (Math.cos(Math.toRadians(angle)) * len);
 		int yEnd = y - (int) (Math.sin(Math.toRadians(angle)) * len);
 		double xAcc = Math.cos(Math.toRadians(angle)) * power;
@@ -65,4 +65,3 @@ public class Catapult implements Paintable{
 	}
 
 }
-*/

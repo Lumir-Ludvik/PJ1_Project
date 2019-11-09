@@ -37,7 +37,7 @@ public class Canvas {
         }
     }
 
-    public static  Canvas getInstance() {
+    public static Canvas getInstance() {
         if (instance == null) {
             JavaFXApplication.doLaunch();
         }

@@ -1,5 +1,6 @@
 package sample;
 
+import catapult.CatapultController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,10 +10,11 @@ import javafx.stage.Stage;
 public class JavaFXApplication extends Application {
 
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Polaris");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        CatapultController controller = CatapultController.create();
+        primaryStage.setScene(controller.createScene());
         primaryStage.show();
+        primaryStage.setOnCloseRequest(x -> System.exit(0));
     }
 
     public static void doLaunch(String...args) {

@@ -11,7 +11,7 @@ import shapes.Ball;
  *
  */
 public class Physics {
-/*
+
 	private final int gravity;
 	
 	
@@ -20,7 +20,7 @@ public class Physics {
 		this.gravity = gravity;
 	}
 
-	public void manageBallMovement(Ball ball, SimulationManager manager, int canvasWidth, int canvasHeight) {
+	public void manageBallMovement(Ball ball, Simulation manager, int canvasWidth, int canvasHeight) {
 		long time = System.currentTimeMillis();
 		while(ball.getY() < canvasHeight) {
 			ProcessRoutines.sleep(1);
@@ -37,5 +37,5 @@ public class Physics {
 		}
 	}
 
- */
+
 }
