@@ -11,6 +11,7 @@ import shapes.Ball;
  * @author koz01
  *
  */
+/*
 public class Catapult implements Paintable{
 
 	private static final int ARR_SIZE = 5;
@@ -62,4 +63,6 @@ public class Catapult implements Paintable{
 	public void paint(GraphicsContext gc) {
 		shape.paint(gc);
 	}
+
 }
+*/

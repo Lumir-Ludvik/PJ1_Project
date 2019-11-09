@@ -1,24 +1,54 @@
 package sample;
 
-public class Canvas {
-    private static Canvas instatce;
-    private javafx.scene.canvas.Canvas canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
-    private Canvas(javafx.scene.canvas.Canvas canvas){
+import java.util.LinkedList;
+import java.util.List;
+
+public class Canvas {
+    private static Canvas instance;
+    private javafx.scene.canvas.Canvas canvas;
+    private List<Paintable> entities = new LinkedList<>();
+
+    private Canvas(javafx.scene.canvas.Canvas canvas) {
         this.canvas = canvas;
     }
 
-    public static synchronized Canvas getInstance() {
-        if (instatce == null) {
-            JavaFXApplication.doLaunch();
+     public static void createCanvas(javafx.scene.canvas.Canvas canvas) {
+        if (instance == null) {
+            instance = new Canvas(canvas);
         }
-        return instatce;
     }
 
-     static synchronized void createCanvas(javafx.scene.canvas.Canvas canvas) {
-        if(instatce == null) {
-            instatce = new Canvas(canvas);
-            Canvas.class.notifyAll();
+    public void addEntities(Paintable entity) {
+        entities.add(entity);
+    }
+
+    public void redraw(){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        Paint paint = gc.getFill();
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+        gc.setFill(paint);
+        for (Paintable entity: entities) {
+            entity.paint(gc);
         }
-     }
+    }
+
+    public static  Canvas getInstance() {
+        if (instance == null) {
+            JavaFXApplication.doLaunch();
+        }
+        return instance;
+    }
+
+    public double getHeight() {
+        return canvas.getHeight();
+    }
+
+    public double getWidth() {
+        return canvas.getWidth();
+    }
 }

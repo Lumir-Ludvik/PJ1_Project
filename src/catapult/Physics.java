@@ -11,7 +11,7 @@ import shapes.Ball;
  *
  */
 public class Physics {
-
+/*
 	private final int gravity;
 	
 	
@@ -36,4 +36,6 @@ public class Physics {
 		
 		}
 	}
+
+ */
 }
