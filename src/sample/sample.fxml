@@ -14,41 +14,42 @@
             prefWidth="450.0"
             xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="catapult.CatapultController">
+            fx:controller="sample.CatapultController">
     <bottom>
         <HBox BorderPane.alignment="CENTER">
             <children>
                 <VBox alignment="CENTER">
                     <children>
-                        <Label text="Power" />
-                        <Slider fx:id="power" value="10.0">
+                        <Button fx:id="lft" mnemonicParsing="false" text="Left" >
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
                             <VBox.margin>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </VBox.margin>
-                        </Slider>
+                        </Button>
                     </children>
                 </VBox>
                 <StackPane>
                     <children>
-                        <Button fx:id="fire" mnemonicParsing="false" text="Fire" />
+                        <Button fx:id="ctr" mnemonicParsing="false" text="Center" />
                     </children>
                 </StackPane>
                 <VBox alignment="CENTER">
                     <children>
-                        <Label text="Angle" />
-                        <Slider fx:id="angle" max="90.0" value="45.0">
+                        <Button fx:id="rgh" mnemonicParsing="false" text="Right" >
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
                             <VBox.margin>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </VBox.margin>
-                        </Slider>
+                        </Button>
                     </children>
                 </VBox>
             </children>
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                <Insets bottom="10.0" left="100.0" right="100.0" top="10.0" />
             </BorderPane.margin>
         </HBox>
     </bottom>

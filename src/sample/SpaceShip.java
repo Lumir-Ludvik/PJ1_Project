@@ -1,4 +1,4 @@
-package catapult;
+package sample;
 
 import commons.Constants;
 import javafx.scene.canvas.GraphicsContext;

@@ -1,8 +1,7 @@
-package catapult;
+package sample;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import commons.ProcessRoutines;
-import sample.Paintable;
 import shapes.Arrow;
 import shapes.Ball;
 

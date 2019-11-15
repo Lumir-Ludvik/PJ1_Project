@@ -1,8 +1,7 @@
-package catapult;
+package sample;
 
 import commons.Constants;
 import javafx.application.Platform;
-import sample.Canvas;
 import shapes.Ball;
 
 public class Simulation {
@@ -28,11 +27,12 @@ public class Simulation {
         canvas.addEntities(ball);
         hud = new HUD();
         canvas.addEntities(hud);
-
+        spaceShip = new SpaceShip((int) canvas.getWidth(), (int) canvas.getHeight());
+        //canvas.addEntities(spaceShip);
     }
 
     public void restore() {
-        ball.stopAndMoveTo(xAxis,yAxis);
+        ball.stopAndMoveTo(xAxis, yAxis);
         redraw();
     }
 
@@ -43,7 +43,7 @@ public class Simulation {
 
     public boolean stepOfSimulation() {
         boolean continueSimulation = !ball.overlaps(spaceShip);
-        if(!continueSimulation) {
+        if (!continueSimulation) {
             spaceShip.hit();
             hud.increaseScore();
         }
@@ -54,14 +54,5 @@ public class Simulation {
 
     private void redraw() {
         Platform.runLater(canvas::redraw);
-    }
-
-    public void setAngle(double angle) {
-        catapult.setAngle(angle);
-        redraw();
-    }
-
-    public void setPower(double power) {
-        catapult.setPower(power);
     }
 }

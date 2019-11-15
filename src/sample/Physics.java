@@ -1,4 +1,4 @@
-package catapult;
+package sample;
 import commons.ProcessRoutines;
 import shapes.Ball;
 

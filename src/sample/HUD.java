@@ -1,8 +1,8 @@
-package catapult;
+package sample;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import sample.Paintable;
+
 
 public class HUD implements Paintable {
     private int score;
