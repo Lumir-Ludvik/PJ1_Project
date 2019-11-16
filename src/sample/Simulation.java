@@ -2,48 +2,89 @@ package sample;
 
 import commons.Constants;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import shapes.Ball;
 
 public class Simulation {
-    private int xAxis;
-    private int yAxis;
+    private char button;
     private Canvas canvas;
-    private Catapult catapult;
-    private Ball ball;
+    private Catapult catapultLeft;
+    private Catapult catapultCenter;
+    private Catapult catapultRight;
+    private Ball ballLeft;
+    private Ball ballCenter;
+    private Ball ballRight;
+    @FXML
+    private Button left;
+    @FXML
+    private Button center;
+    @FXML
+    private Button right;
+
     private Physics physics;
     private HUD hud;
     private SpaceShip spaceShip;
 
-    public Simulation(double angle, double power, int catapultXAxis, int catapultYAxis) {
+    public Simulation() {
         canvas = Canvas.getInstance();
-        xAxis = catapultXAxis;
-        yAxis = catapultYAxis;
-        catapult = new Catapult(xAxis, yAxis, Constants.LEN_OF_CATAPULT);
-        catapult.setAngle(angle);
-        catapult.setPower(power);
-        ball = new Ball(xAxis, yAxis, Constants.SIZE_OF_BALL);
+        catapultLeft = new Catapult(5, 350, Constants.LEN_OF_CATAPULT);
+        catapultLeft.setAngle(45);
+        catapultLeft.setPower(100);
+        catapultCenter = new Catapult(210, 300, Constants.LEN_OF_CATAPULT);
+        catapultCenter.setAngle(90);
+        catapultCenter.setPower(100);
+        catapultRight = new Catapult(425, 350, Constants.LEN_OF_CATAPULT);
+        catapultRight.setAngle(150);
+        catapultRight.setPower(100);
+        ballLeft = new Ball(5, 350, Constants.SIZE_OF_BALL);
+        ballCenter = new Ball(210, 300, Constants.SIZE_OF_BALL);
+        ballRight = new Ball(425, 350, Constants.SIZE_OF_BALL);
         physics = new Physics(Constants.GRAVITY);
-        canvas.addEntities(catapult);
-        canvas.addEntities(ball);
+        canvas.addEntities(catapultLeft);
+        canvas.addEntities(catapultCenter);
+        canvas.addEntities(catapultRight);
+        canvas.addEntities(ballLeft);
+        canvas.addEntities(ballCenter);
+        canvas.addEntities(ballRight);
         hud = new HUD();
         canvas.addEntities(hud);
         spaceShip = new SpaceShip((int) canvas.getWidth(), (int) canvas.getHeight());
-        //canvas.addEntities(spaceShip);
+        canvas.addEntities(spaceShip);
     }
 
     public void restore() {
-        ball.stopAndMoveTo(xAxis, yAxis);
+        left.setDisable(false);
+        center.setDisable(false);
+        right.setDisable(false);
+        ballLeft.stopAndMoveTo(5, 350);
         redraw();
     }
 
     public void startSimulation() {
-        catapult.shootBall(ball, this);
-        physics.manageBallMovement(ball, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+        switch (button) {
+            case 'l':
+                catapultLeft.shootBall(ballLeft, this);
+                physics.manageBallMovement(ballLeft, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+                break;
+            case 'c':
+                catapultCenter.shootBall(ballCenter, this);
+                physics.manageBallMovement(ballCenter, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+                break;
+            case 'r':
+                catapultRight.shootBall(ballRight, this);
+                physics.manageBallMovement(ballRight, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+                break;
+        }
+
     }
 
     public boolean stepOfSimulation() {
-        boolean continueSimulation = !ball.overlaps(spaceShip);
-        if (!continueSimulation) {
+        boolean continueSimulation = !ballLeft.overlaps(spaceShip) && !ballCenter.overlaps(spaceShip) && !ballRight.overlaps(spaceShip);
+        boolean hitWall = !ballLeft.overlaps(canvas) && !ballCenter.overlaps(canvas) && !ballRight.overlaps(canvas);
+        if (!continueSimulation && !hitWall) {
             spaceShip.hit();
             hud.increaseScore();
         }
@@ -54,5 +95,29 @@ public class Simulation {
 
     private void redraw() {
         Platform.runLater(canvas::redraw);
+    }
+
+    private void leftPressed(ActionEvent event) {
+        left.setDisable(true);
+        button = 'l';
+        startSimulation();
+    }
+
+    private void centerPressed(ActionEvent event) {
+        left.setDisable(true);
+        button = 'c';
+        startSimulation();
+    }
+
+    private void rightPressed(ActionEvent event) {
+        left.setDisable(true);
+        button = 'r';
+        startSimulation();
+    }
+
+    private void init(){
+        left.setOnAction(this::leftPressed);
+        center.setOnAction(this::centerPressed);
+        right.setOnAction(this::rightPressed);
     }
 }

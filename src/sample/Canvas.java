@@ -7,7 +7,7 @@ import javafx.scene.paint.Paint;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Canvas {
+public class Canvas implements Boundary {
     private static Canvas instance;
     private javafx.scene.canvas.Canvas canvas;
     private List<Paintable> entities = new LinkedList<>();
@@ -46,6 +46,16 @@ public class Canvas {
 
     public double getHeight() {
         return canvas.getHeight();
+    }
+
+    @Override
+    public double getXOfCorner() {
+        return getWidth();
+    }
+
+    @Override
+    public double getYOfCorner() {
+        return getHeight();
     }
 
     public double getWidth() {

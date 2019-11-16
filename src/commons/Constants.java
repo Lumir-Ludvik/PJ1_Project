@@ -9,6 +9,6 @@ public final class Constants {
     public static final int LEN_OF_CATAPULT = 40;
     public static final Image SPACESHIP;
     static{
-        SPACESHIP = new Image(Constants.class.getResourceAsStream("spaceShip.jpg"));
+        SPACESHIP = new Image(Constants.class.getResourceAsStream("spaceShip.png"));
     }
 }
