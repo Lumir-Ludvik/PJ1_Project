@@ -27,21 +27,24 @@ public class Simulation {
     private Physics physics;
     private HUD hud;
     private SpaceShip spaceShip;
+    private Background background;
 
     public Simulation() {
         canvas = Canvas.getInstance();
-        catapultLeft = new Catapult(5, 350, Constants.LEN_OF_CATAPULT);
+        background = new Background();
+        canvas.addEntities(background);
+        catapultLeft = new Catapult(45, 345, Constants.LEN_OF_CATAPULT);
         catapultLeft.setAngle(45);
         catapultLeft.setPower(100);
-        catapultCenter = new Catapult(210, 300, Constants.LEN_OF_CATAPULT);
+        catapultCenter = new Catapult(215, 320, Constants.LEN_OF_CATAPULT);
         catapultCenter.setAngle(90);
         catapultCenter.setPower(100);
-        catapultRight = new Catapult(425, 350, Constants.LEN_OF_CATAPULT);
+        catapultRight = new Catapult(410, 315, Constants.LEN_OF_CATAPULT);
         catapultRight.setAngle(150);
         catapultRight.setPower(100);
-        ballLeft = new Ball(5, 350, Constants.SIZE_OF_BALL);
-        ballCenter = new Ball(210, 300, Constants.SIZE_OF_BALL);
-        ballRight = new Ball(425, 350, Constants.SIZE_OF_BALL);
+        ballLeft = new Ball(45, 345, Constants.SIZE_OF_BALL);
+        ballCenter = new Ball(215, 320, Constants.SIZE_OF_BALL);
+        ballRight = new Ball(410, 315, Constants.SIZE_OF_BALL);
         physics = new Physics(Constants.GRAVITY);
         canvas.addEntities(catapultLeft);
         canvas.addEntities(catapultCenter);
