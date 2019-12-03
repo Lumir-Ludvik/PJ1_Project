@@ -3,10 +3,12 @@ package sample;
 import commons.Constants;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;;
 
 import java.io.IOException;
@@ -29,14 +31,30 @@ public class CatapultController {
         return result;
     }
 
-    private  void init() {
+    private void init() {
         Canvas.createCanvas(canvas);
         simulation = new Simulation();
         Canvas.getInstance().redraw();
     }
-    public Scene createScene(){
-        Scene scene = new Scene(root,450,540);
-        //scene.getStylesheets().addAll(this.getClass().getResource("background.css").toExternalForm());
+
+    public Scene createScene() {
+        Scene scene = new Scene(root, 450, 540);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case LEFT:
+                        simulation.leftPressed();
+                        break;
+                    case UP:
+                        simulation.centerPressed();
+                        break;
+                    case RIGHT:
+                        simulation.rightPressed();
+                        break;
+                }
+            }
+        });
         return scene;
     }
 
@@ -45,7 +63,7 @@ public class CatapultController {
         Platform.runLater(this::restoreToInitialState);
     }
 
-    private void restoreToInitialState(){
+    private void restoreToInitialState() {
         simulation.restore();
     }
 }

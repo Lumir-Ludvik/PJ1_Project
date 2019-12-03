@@ -17,12 +17,7 @@ public class Simulation {
     private Ball ballLeft;
     private Ball ballCenter;
     private Ball ballRight;
-    @FXML
-    private Button left;
-    @FXML
-    private Button center;
-    @FXML
-    private Button right;
+
 
     private Physics physics;
     private HUD hud;
@@ -59,9 +54,6 @@ public class Simulation {
     }
 
     public void restore() {
-        left.setDisable(false);
-        center.setDisable(false);
-        right.setDisable(false);
         ballLeft.stopAndMoveTo(5, 350);
         redraw();
     }
@@ -70,24 +62,24 @@ public class Simulation {
         switch (button) {
             case 'l':
                 catapultLeft.shootBall(ballLeft, this);
-                physics.manageBallMovement(ballLeft, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+                physics.manageBallMovement(ballLeft, this, (int) canvas.getWidth(), (int) canvas.getHeight());
                 break;
             case 'c':
                 catapultCenter.shootBall(ballCenter, this);
-                physics.manageBallMovement(ballCenter, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+                physics.manageBallMovement(ballCenter, this, (int) canvas.getWidth(), (int) canvas.getHeight());
                 break;
             case 'r':
                 catapultRight.shootBall(ballRight, this);
-                physics.manageBallMovement(ballRight, this, (int) canvas.getWidth(), (int) canvas.getWidth());
+                physics.manageBallMovement(ballRight, this, (int) canvas.getWidth(), (int) canvas.getHeight());
                 break;
         }
 
     }
 
     public boolean stepOfSimulation() {
-        boolean continueSimulation = !ballLeft.overlaps(spaceShip) && !ballCenter.overlaps(spaceShip) && !ballRight.overlaps(spaceShip);
-        boolean hitWall = !ballLeft.overlaps(canvas) && !ballCenter.overlaps(canvas) && !ballRight.overlaps(canvas);
-        if (!continueSimulation && !hitWall) {
+        boolean continueSimulation = !ballLeft.overlaps(spaceShip);
+        //boolean hitWall = !ballLeft.overlaps(canvas);
+        if (!continueSimulation) {
             spaceShip.hit();
             hud.increaseScore();
         }
@@ -100,27 +92,21 @@ public class Simulation {
         Platform.runLater(canvas::redraw);
     }
 
-    private void leftPressed(ActionEvent event) {
-        left.setDisable(true);
+    public void leftPressed() {
+        //left.setDisable(true);
         button = 'l';
         startSimulation();
     }
 
-    private void centerPressed(ActionEvent event) {
-        left.setDisable(true);
+    public void centerPressed() {
+        //left.setDisable(true);
         button = 'c';
         startSimulation();
     }
 
-    private void rightPressed(ActionEvent event) {
-        left.setDisable(true);
+    public void rightPressed() {
+        //left.setDisable(true);
         button = 'r';
         startSimulation();
-    }
-
-    private void init(){
-        left.setOnAction(this::leftPressed);
-        center.setOnAction(this::centerPressed);
-        right.setOnAction(this::rightPressed);
     }
 }
