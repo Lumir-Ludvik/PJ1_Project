@@ -1,11 +1,8 @@
 package sample;
 
 import commons.Constants;
+import commons.ProcessRoutines;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import shapes.Ball;
 
 public class Simulation {
@@ -30,13 +27,13 @@ public class Simulation {
         canvas.addEntities(background);
         catapultLeft = new Catapult(45, 345, Constants.LEN_OF_CATAPULT);
         catapultLeft.setAngle(45);
-        catapultLeft.setPower(100);
+        catapultLeft.setPower(Constants.POWER);
         catapultCenter = new Catapult(215, 320, Constants.LEN_OF_CATAPULT);
         catapultCenter.setAngle(90);
-        catapultCenter.setPower(100);
+        catapultCenter.setPower(Constants.POWER);
         catapultRight = new Catapult(410, 315, Constants.LEN_OF_CATAPULT);
         catapultRight.setAngle(150);
-        catapultRight.setPower(100);
+        catapultRight.setPower(Constants.POWER);
         ballLeft = new Ball(45, 345, Constants.SIZE_OF_BALL);
         ballCenter = new Ball(215, 320, Constants.SIZE_OF_BALL);
         ballRight = new Ball(410, 315, Constants.SIZE_OF_BALL);
@@ -54,7 +51,9 @@ public class Simulation {
     }
 
     public void restore() {
-        ballLeft.stopAndMoveTo(5, 350);
+        ballLeft.stopAndMoveTo(45, 345);
+        ballCenter.stopAndMoveTo(215, 320);
+        ballRight.stopAndMoveTo(410, 315);
         redraw();
     }
 
@@ -83,7 +82,6 @@ public class Simulation {
             spaceShip.hit();
             hud.increaseScore();
         }
-        spaceShip.moveSpaceShip();
         redraw();
         return continueSimulation;
     }
@@ -92,21 +90,30 @@ public class Simulation {
         Platform.runLater(canvas::redraw);
     }
 
+
+    public void startPressed(){
+        spaceShip.moveSpaceShip();
+        if (spaceShip.getXOfCorner() + 50  >= canvas.getWidth() || spaceShip.getXOfCorner() <= 0) {
+            spaceShip.createSpaceShip();
+        }
+        Platform.runLater(this::restore);
+    }
+
     public void leftPressed() {
-        //left.setDisable(true);
         button = 'l';
         startSimulation();
+        Platform.runLater(this::restore);
     }
 
     public void centerPressed() {
-        //left.setDisable(true);
         button = 'c';
         startSimulation();
+        Platform.runLater(this::restore);
     }
 
     public void rightPressed() {
-        //left.setDisable(true);
         button = 'r';
         startSimulation();
+        Platform.runLater(this::restore);
     }
 }

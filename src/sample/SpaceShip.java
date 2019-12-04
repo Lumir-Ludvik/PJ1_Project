@@ -1,6 +1,7 @@
 package sample;
 
 import commons.Constants;
+import commons.ProcessRoutines;
 import javafx.scene.canvas.GraphicsContext;
 import java.util.Random;
 
@@ -39,7 +40,7 @@ public class SpaceShip implements Paintable, Boundary {
     }
 
     public void hit() {
-        createSpaceShip();
+       createSpaceShip();
     }
 
     @Override
@@ -54,16 +55,21 @@ public class SpaceShip implements Paintable, Boundary {
 
     @Override
     public double getWidth() {
-        return widthCanvas;
+        return 50;
     }
 
     @Override
     public double getHeight() {
-        return heightCanvas;
+        return 20;
     }
 
     @Override
     public void paint(GraphicsContext gc) {
-        gc.drawImage(Constants.SPACESHIP, x, y, 50, 20);
+        if(!direction){
+            gc.drawImage(Constants.SPACESHIP, x, y, 50, 20);
+        } else {
+            gc.drawImage(Constants.SPACESHIP, x, y, -50, 20);
+        }
+
     }
 }

@@ -7,7 +7,7 @@ import javafx.scene.paint.Paint;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Canvas implements Boundary {
+public class Canvas {
     private static Canvas instance;
     private javafx.scene.canvas.Canvas canvas;
     private List<Paintable> entities = new LinkedList<>();
@@ -16,30 +16,39 @@ public class Canvas implements Boundary {
         this.canvas = canvas;
     }
 
-     public static void createCanvas(javafx.scene.canvas.Canvas canvas) {
-        if (instance == null) {
-            instance = new Canvas(canvas);
+    public static synchronized void createCanvas(javafx.scene.canvas.Canvas canvas) {
+        if (instance != null) {
+            throw new IllegalStateException("Canvas already created");
         }
+        instance = new Canvas(canvas);
+        Canvas.class.notifyAll();
     }
 
     public void addEntities(Paintable entity) {
         entities.add(entity);
     }
 
-    public void redraw(){
+    public void redraw() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Paint paint = gc.getFill();
         gc.setFill(Color.BLACK);
-        gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(paint);
-        for (Paintable entity: entities) {
+        for (Paintable entity : entities) {
             entity.paint(gc);
         }
     }
 
-    public static Canvas getInstance() {
+    public synchronized static Canvas getInstance() {
         if (instance == null) {
-            JavaFXApplication.doLaunch();
+            new Thread(JavaFXApplication::doLaunch).start();
+            while (instance == null) {
+                try {
+                    Canvas.class.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return instance;
     }
@@ -48,15 +57,6 @@ public class Canvas implements Boundary {
         return canvas.getHeight();
     }
 
-    @Override
-    public double getXOfCorner() {
-        return getWidth();
-    }
-
-    @Override
-    public double getYOfCorner() {
-        return getHeight();
-    }
 
     public double getWidth() {
         return canvas.getWidth();

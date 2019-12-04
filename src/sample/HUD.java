@@ -13,6 +13,6 @@ public class HUD implements Paintable {
     @Override
     public void paint(GraphicsContext gc) {
         gc.setFill(Color.YELLOW);
-        gc.fillText(""+score, 10,10);
+        gc.fillText(""+score, 210,520);
     }
 }

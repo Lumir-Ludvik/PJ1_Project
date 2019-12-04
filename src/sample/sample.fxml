@@ -17,6 +17,6 @@
             fx:controller="sample.CatapultController">
 
     <center>
-        <Canvas fx:id="canvas" height="450.0" width="450.0" BorderPane.alignment="CENTER" />
+        <Canvas fx:id="canvas" height="540.0" width="450.0" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>

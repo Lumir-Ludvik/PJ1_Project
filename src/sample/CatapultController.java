@@ -1,6 +1,7 @@
 package sample;
 
 import commons.Constants;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,7 +21,8 @@ public class CatapultController {
     @FXML
     private BorderPane root;
 
-    private Simulation simulation;
+    public Simulation simulation;
+
 
     public static CatapultController create() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -38,25 +40,10 @@ public class CatapultController {
     }
 
     public Scene createScene() {
-        Scene scene = new Scene(root, 450, 540);
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case LEFT:
-                        simulation.leftPressed();
-                        break;
-                    case UP:
-                        simulation.centerPressed();
-                        break;
-                    case RIGHT:
-                        simulation.rightPressed();
-                        break;
-                }
-            }
-        });
-        return scene;
+        return new Scene(root, 450, 540);
     }
+
+
 
     private void doBallMovement() {
         simulation.startSimulation();
