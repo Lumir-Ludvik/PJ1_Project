@@ -14,7 +14,7 @@ public class JavaFXApplication extends Application {
     public boolean right = false;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Polaris");
         CatapultController controller = CatapultController.create();
         Scene scene = controller.createScene();
@@ -44,16 +44,19 @@ public class JavaFXApplication extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if(start) controller.simulation.startPressed();
+                if (start) {
+                    controller.simulation.startPressed();
+                    controller.simulation.hud.invertShowStartMess();
+                }
                 if (left) controller.simulation.leftPressed();
                 if (up) controller.simulation.centerPressed();
-                if (right)  controller.simulation.rightPressed();
+                if (right) controller.simulation.rightPressed();
             }
         };
         timer.start();
     }
 
-    public static void doLaunch(String...args) {
+    public static void doLaunch(String... args) {
         Application.launch(args);
     }
 }

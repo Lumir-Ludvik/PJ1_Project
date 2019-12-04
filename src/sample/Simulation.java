@@ -17,7 +17,7 @@ public class Simulation {
 
 
     private Physics physics;
-    private HUD hud;
+    public HUD hud;
     private SpaceShip spaceShip;
     private Background background;
 
