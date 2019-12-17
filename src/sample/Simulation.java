@@ -77,7 +77,6 @@ public class Simulation {
 
     public boolean stepOfSimulation() {
         boolean continueSimulation = !ballLeft.overlaps(spaceShip);
-        //boolean hitWall = !ballLeft.overlaps(canvas);
         if (!continueSimulation) {
             spaceShip.hit();
             hud.increaseScore();
@@ -101,19 +100,20 @@ public class Simulation {
 
     public void leftPressed() {
         button = 'l';
+        //new Thread(this::startSimulation).start();
         startSimulation();
         Platform.runLater(this::restore);
     }
 
     public void centerPressed() {
         button = 'c';
-        startSimulation();
+        new Thread(this::startSimulation).start();
         Platform.runLater(this::restore);
     }
 
     public void rightPressed() {
         button = 'r';
-        startSimulation();
+        new Thread(this::startSimulation).start();
         Platform.runLater(this::restore);
     }
 }

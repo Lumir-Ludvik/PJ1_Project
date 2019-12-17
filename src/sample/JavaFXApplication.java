@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.*;
+import java.lang.Integer;
+
 public class JavaFXApplication extends Application {
     public boolean left = false;
     public boolean start = false;
@@ -26,7 +29,7 @@ public class JavaFXApplication extends Application {
                         start = !start;
                         break;
                     case LEFT:
-                        left = !left;
+                        left = true;
                         break;
                     case UP:
                         up = true;
@@ -37,7 +40,22 @@ public class JavaFXApplication extends Application {
                 }
             }
         });
-
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case LEFT:
+                        left = false;
+                        break;
+                    case UP:
+                        up = false;
+                        break;
+                    case RIGHT:
+                        right = false;
+                        break;
+                }
+            }
+        });
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(x -> System.exit(0));
@@ -48,12 +66,34 @@ public class JavaFXApplication extends Application {
                     controller.simulation.startPressed();
                     controller.simulation.hud.invertShowStartMess();
                 }
-                if (left) controller.simulation.leftPressed();
-                if (up) controller.simulation.centerPressed();
-                if (right) controller.simulation.rightPressed();
+                if (left) {
+                    controller.simulation.leftPressed();
+
+                }
+                if (up) {
+                    controller.simulation.centerPressed();
+
+                }
+                if (right) {
+                    controller.simulation.rightPressed();
+
+                }
             }
         };
         timer.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                try {
+                    PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("scorePolaris.txt")));
+                    pw.println(controller.simulation.hud.getScore());
+                    pw.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "Shutdown-thread"));
     }
 
     public static void doLaunch(String... args) {

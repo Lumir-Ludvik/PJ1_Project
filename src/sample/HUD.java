@@ -22,4 +22,8 @@ public class HUD implements Paintable {
     public void invertShowStartMess(){
         showStartMess = false;
     }
+
+    public int getScore() {
+        return score;
+    }
 }
